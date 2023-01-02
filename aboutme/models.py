@@ -1,7 +1,7 @@
 from django.db import models
 from django_resized import ResizedImageField
 
-
+# adding
 # Create your models here.
 
 
