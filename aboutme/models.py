@@ -27,3 +27,15 @@ class Greetings(models.Model):
     class Meta:
         verbose_name = "Greeting"
         verbose_name_plural = 'Greetings'
+
+
+class Contacts(models.Model):
+    address = models.CharField(max_length=200)
+    contact = models.CharField(max_length=120)
+    email = models.CharField(max_length=120)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = "Contact"
+        verbose_name_plural = 'Contacts'

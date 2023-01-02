@@ -2,8 +2,8 @@ from django.http import JsonResponse
 from django.shortcuts import render
 from rest_framework.views import APIView
 
-from aboutme.models import AboutMe, Greetings
-from aboutme.serializers import AboutMeSerializer, GreetingSerializer
+from aboutme.models import AboutMe, Contacts, Greetings
+from aboutme.serializers import AboutMeSerializer, ContactSerializer, GreetingSerializer
 
 # Create your views here.
 
@@ -31,5 +31,18 @@ class GreetingApi(APIView):
             if not jsonGreetings:
                 return JsonResponse("data not found", safe=False, status=404)
             return JsonResponse(jsonGreetings.data[0], safe=False)
+        except Exception as e:
+            return JsonResponse(e, safe=False, status=500)
+
+
+class ContactApi(APIView):
+    def get(self, request):
+        contacts = Contacts.objects.all().order_by("-updated_at", '-pk')
+        try:
+            jsonContacts = ContactSerializer(
+                contacts, many=True,  context={"request": request})
+            if not jsonContacts:
+                return JsonResponse("data not found", safe=False, status=404)
+            return JsonResponse(jsonContacts.data[0], safe=False)
         except Exception as e:
             return JsonResponse(e, safe=False, status=500)

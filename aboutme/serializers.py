@@ -1,6 +1,6 @@
 
 from rest_framework import serializers
-from aboutme.models import AboutMe, Greetings
+from aboutme.models import AboutMe, Contacts, Greetings
 
 
 class AboutMeSerializer(serializers.ModelSerializer):
@@ -26,3 +26,9 @@ class GreetingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Greetings
         fields = ['greet', 'resignation', 'description']
+
+
+class ContactSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Contacts
+        fields = ['address', 'contact', 'email']
