@@ -1,6 +1,6 @@
 from django.db import models
+from django_resized import ResizedImageField
 
-from suzatadjango.utis import image_resize
 
 # Create your models here.
 
@@ -8,14 +8,9 @@ from suzatadjango.utis import image_resize
 class AboutMe(models.Model):
     about = models.TextField()
     resume = models.FileField(upload_to="pdf/")
-    image = models.ImageField(upload_to="images/")
+    image = ResizedImageField(size=[1000, 1000], upload_to="images/")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-
-    def save(self, commit=True, *args, **kwargs):
-        if commit:
-            image_resize(self.image, 1000, 1000)
-            super().save(*args, **kwargs)
 
     class Meta:
         verbose_name = "About Me"
