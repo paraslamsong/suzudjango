@@ -8,5 +8,5 @@ urlpatterns = [
     # About ME
     path('detail/', views.AboutMeApi.as_view(), name="About Me"),
     path('greeting/', views.GreetingApi.as_view(), name="Greeting"),
-    path('contacts/', views.GreetingApi.as_view(), name="Contacts")
+    path('contacts/', views.ContactApi.as_view(), name="Contacts")
 ]
