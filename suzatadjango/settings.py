@@ -12,6 +12,9 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 import os
 from pathlib import Path
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -24,7 +27,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-h60n-eblr1dd%e)(xyse!cgzm*a@e0b43d$)kdi(wjiu^*o&ok'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv("DEBUG")
 
 ALLOWED_HOSTS = []
 
@@ -99,17 +102,23 @@ WSGI_APPLICATION = 'suzatadjango.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE':  os.environ.get('DB_ENGINE'),
-        'NAME':  os.environ.get('DB_NAME'),
-
-        'USER': os.environ.get('DB_USER'),
+if DEBUG:
+    db = {
+        'ENGINE':  'django.db.backends.sqlite3',
+        'NAME':  os.path.join(BASE_DIR, "db.sqlite3")
+    }
+else:
+    db = {
+        'ENGINE':  os.getenv("DB_ENGINE"),
+        'NAME':  os.getenv("DB_NAME"),
+        'USER': os.getenv("DB_USERNAME"),
         'PASSWORD': os.environ.get('DB_PASSWORD'),
         'HOST': os.environ.get('DB_HOST'),
-        'PORT': os.environ.get('DB_PORT'),
-
+        'PORT': os.environ.get('DB_PORT')
     }
+
+DATABASES = {
+    'default':  db
 }
 
 
